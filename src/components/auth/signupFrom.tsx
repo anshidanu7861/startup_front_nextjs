@@ -1,6 +1,44 @@
+"use client";
+import { ToastContainer, toast } from "react-toastify";
+
+import BtnLoader from "@/commons/loders/ButtonLoder";
+import axiosConfig from "@/config/axios.config";
 import Link from "next/link";
+import { useState, ChangeEvent } from "react";
+import { BiSolidError } from "react-icons/bi";
+import { toastError } from "@/commons/errors/toastError";
 
 export default function SignupForm() {
+  const [data, setData] = useState({
+    name: "",
+    last_name: "",
+    email: "",
+    password: "",
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [err, setErr] = useState("");
+
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      setIsLoading(true);
+      const res = await axiosConfig.post("/register", data);
+      setIsLoading(false);
+    } catch (error: any) {
+      setErr(error.response.data.error || error.response.data.err);
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
+
   return (
     <div className="py-20 ">
       <div className="flex justify-center items-center ">
@@ -12,6 +50,16 @@ export default function SignupForm() {
               alt=""
             />
           </div>
+          {err ? (
+            <div className="p-2 rounded-lg border border-gray-300 bg-slate-100 flex justify-center gap-2">
+              <h1 className="text-lg text-red-500">
+                <BiSolidError />
+              </h1>
+              <h1 className="text-sm">{err}</h1>
+            </div>
+          ) : (
+            ""
+          )}
           <div className="pt-2">
             <div>
               <h1 className="font-bold text-xl">Create your account</h1>
@@ -45,6 +93,11 @@ export default function SignupForm() {
                 </div>
                 <div>
                   <input
+                    name="name"
+                    value={data.name}
+                    onChange={(e) => {
+                      onChangeHandler(e);
+                    }}
                     type="text"
                     className="w-full h-9 outline-none border-gray-300 border rounded-md p-2"
                   />
@@ -56,6 +109,11 @@ export default function SignupForm() {
                 </div>
                 <div>
                   <input
+                    value={data.last_name}
+                    name="last_name"
+                    onChange={(e) => {
+                      onChangeHandler(e);
+                    }}
                     type="text"
                     className="w-full h-9 outline-none border-gray-300 border rounded-md p-2"
                   />
@@ -71,6 +129,11 @@ export default function SignupForm() {
             </div>
             <div>
               <input
+                name="email"
+                value={data.email}
+                onChange={(e) => {
+                  onChangeHandler(e);
+                }}
                 type="email"
                 className="w-full h-9 outline-none border-gray-300 border rounded-md p-2"
               />
@@ -82,15 +145,31 @@ export default function SignupForm() {
             </div>
             <div>
               <input
+                name="password"
+                value={data.password}
+                onChange={(e) => {
+                  onChangeHandler(e);
+                }}
                 type="password"
                 className="w-full h-9 outline-none border-gray-300 border rounded-md p-2"
               />
             </div>
           </div>
           <div className="pt-4">
-            <button className="uppercase bg-primary text-white w-full h-10 rounded-md ">
-              continue
-            </button>
+            {!isLoading ? (
+              <button
+                onClick={() => {
+                  handleSubmit();
+                }}
+                className="uppercase bg-primary text-white w-full h-10 rounded-md "
+              >
+                continue
+              </button>
+            ) : (
+              <button className="uppercase  text-white w-full h-10 rounded-md ">
+                <BtnLoader />
+              </button>
+            )}
           </div>
           <div className="pt-7">
             <p className="text-xs">
