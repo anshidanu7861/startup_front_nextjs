@@ -1,12 +1,9 @@
 "use client";
-import { ToastContainer, toast } from "react-toastify";
-
-import BtnLoader from "@/commons/loders/ButtonLoder";
 import axiosConfig from "@/config/axios.config";
 import Link from "next/link";
 import { useState, ChangeEvent } from "react";
 import { BiSolidError } from "react-icons/bi";
-import { toastError } from "@/commons/errors/toastError";
+import CommonButton from "@/components/commons/Buttons/CommonButton";
 
 export default function SignupForm() {
   const [data, setData] = useState({
@@ -33,7 +30,7 @@ export default function SignupForm() {
       const res = await axiosConfig.post("/register", data);
       setIsLoading(false);
     } catch (error: any) {
-      setErr(error.response.data.error || error.response.data.err);
+      setErr(error?.response?.data.error || error?.response?.data?.err);
       setIsLoading(false);
       console.log(error);
     }
@@ -156,24 +153,15 @@ export default function SignupForm() {
             </div>
           </div>
           <div className="pt-4">
-            {!isLoading ? (
-              <button
-                onClick={() => {
-                  handleSubmit();
-                }}
-                className="uppercase bg-primary text-white w-full h-10 rounded-md "
-              >
-                continue
-              </button>
-            ) : (
-              <button className="uppercase  text-white w-full h-10 rounded-md ">
-                <BtnLoader />
-              </button>
-            )}
+            <CommonButton
+              onSubmitHandler={handleSubmit}
+              text={"Register"}
+              loading={isLoading}
+            />
           </div>
           <div className="pt-7">
             <p className="text-xs">
-              Have an account?
+              Have an account?{" "}
               <Link href={"/signin"} className="text-violet-500">
                 Sign in{" "}
               </Link>
