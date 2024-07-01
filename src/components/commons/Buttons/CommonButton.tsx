@@ -5,17 +5,34 @@ interface ButtonActions {
   onSubmitHandler: () => void;
   text: string;
   loading: boolean;
+  type: "submit" | "button";
+  varient: string;
+  isDesabled: boolean;
 }
 
-function CommonButton({ onSubmitHandler, text, loading }: ButtonActions) {
+const style = {
+  PRIMARY: "uppercase bg-primary text-white w-full h-10 rounded-md ",
+  SECONDARY:
+    "uppercase bg-white border-2 border-primary text-white w-full h-10 rounded-md ",
+};
+
+function CommonButton({
+  onSubmitHandler,
+  text,
+  loading,
+  type,
+  varient,
+  isDesabled,
+}: ButtonActions) {
   return (
-    <div>
+    <div className="pt-2">
       {!loading ? (
         <button
+          type={type}
           onClick={() => {
             onSubmitHandler();
           }}
-          className="uppercase bg-primary text-white w-full h-10 rounded-md "
+          className={varient === "PRIMARY" ? style.PRIMARY : style.SECONDARY}
         >
           {text}
         </button>

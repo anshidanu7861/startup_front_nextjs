@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, ChangeEvent } from "react";
 import { BiSolidError } from "react-icons/bi";
 import CommonButton from "@/components/commons/Buttons/CommonButton";
+import CustomInput from "../commons/CustomInputs/CustomInput";
 
 export default function SignupForm() {
   const [data, setData] = useState({
@@ -84,79 +85,57 @@ export default function SignupForm() {
 
           <div className="pt-5">
             <div className="grid md:grid-cols-2 gap-3">
-              <div>
-                <div>
-                  <label className="text-sm">First name</label>
-                </div>
-                <div>
-                  <input
-                    name="name"
-                    value={data.name}
-                    onChange={(e) => {
-                      onChangeHandler(e);
-                    }}
-                    type="text"
-                    className="w-full h-9 outline-none border-gray-300 border rounded-md p-2"
-                  />
-                </div>
-              </div>
-              <div>
-                <div>
-                  <label className="text-sm">Last name</label>
-                </div>
-                <div>
-                  <input
-                    value={data.last_name}
-                    name="last_name"
-                    onChange={(e) => {
-                      onChangeHandler(e);
-                    }}
-                    type="text"
-                    className="w-full h-9 outline-none border-gray-300 border rounded-md p-2"
-                  />
-                </div>
-              </div>
-              <div></div>
+              <CustomInput
+                name="name"
+                value={data.name}
+                onchangeHandler={onChangeHandler}
+                type="text"
+                label="First name"
+                placeHolder="Jhone"
+                varient="PRIMARY"
+                isDesabled={false}
+              />
+              <CustomInput
+                name="last_name"
+                value={data.last_name}
+                onchangeHandler={onChangeHandler}
+                type="text"
+                label="Last name"
+                placeHolder="Deo"
+                varient="PRIMARY"
+                isDesabled={false}
+              />
             </div>
           </div>
 
-          <div className="pt-1">
-            <div>
-              <label className="text-sm"> Email address</label>
-            </div>
-            <div>
-              <input
-                name="email"
-                value={data.email}
-                onChange={(e) => {
-                  onChangeHandler(e);
-                }}
-                type="email"
-                className="w-full h-9 outline-none border-gray-300 border rounded-md p-2"
-              />
-            </div>
-          </div>
-          <div className="pt-2">
-            <div>
-              <label className="text-sm">Password</label>
-            </div>
-            <div>
-              <input
-                name="password"
-                value={data.password}
-                onChange={(e) => {
-                  onChangeHandler(e);
-                }}
-                type="password"
-                className="w-full h-9 outline-none border-gray-300 border rounded-md p-2"
-              />
-            </div>
-          </div>
+          <CustomInput
+            name="email"
+            value={data.email}
+            onchangeHandler={onChangeHandler}
+            type="email"
+            label="Email address"
+            placeHolder="example@gmail.com"
+            varient="PRIMARY"
+            isDesabled={false}
+          />
+          <CustomInput
+            name="password"
+            value={data.password}
+            onchangeHandler={onChangeHandler}
+            type="password"
+            label="Password"
+            placeHolder="******"
+            varient="PRIMARY"
+            isDesabled={false}
+          />
           <div className="pt-4">
             <CommonButton
               onSubmitHandler={handleSubmit}
               text={"Register"}
               loading={isLoading}
+              isDesabled={false}
+              type="button"
+              varient="PRIMARY"
             />
           </div>
           <div className="pt-7">

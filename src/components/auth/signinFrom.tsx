@@ -9,6 +9,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { setUserEnitialData } from "@/redux/slieces/general.slice";
 import { useDispatch, useSelector } from "react-redux";
+import CustomInput from "../commons/CustomInputs/CustomInput";
 
 import Router from "next/router";
 
@@ -117,7 +118,7 @@ export default function SigninForm() {
               <h1 className="font-bold text-xl">Sign in</h1>
             </div>
             <div className="pt-1">
-              <h1 className="text-sm font-light">to continue to NextCourse</h1>
+              <h1 className="text-sm font-light">to continue to Speranza</h1>
             </div>
           </div>
           <div className="pt-7">
@@ -138,40 +139,41 @@ export default function SigninForm() {
             <div className="border-b border-gray-300 flex-grow mx-1"></div>
           </div>
 
-          <div className="pt-5">
-            <div>
-              <label className="text-sm"> Email address</label>
-            </div>
-            <div>
-              <input
-                name="email"
-                value={data.email}
-                onChange={handleChange}
-                type="email"
-                className="w-full h-9 outline-none border-gray-300 border rounded-md p-2"
-              />
-            </div>
-          </div>
-          <div className="pt-2">
-            <div>
-              <label className="text-sm">Password</label>
-            </div>
-            <div>
-              <input
-                name="password"
-                value={data.password}
-                onChange={handleChange}
-                type="password"
-                className="w-full h-9 outline-none border-gray-300 border rounded-md p-2"
-              />
-            </div>
-          </div>
+          <CustomInput
+            name="email"
+            value={data.email}
+            onchangeHandler={handleChange}
+            type="email"
+            label="Email address"
+            placeHolder="example@gmail.com"
+            varient="PRIMARY"
+            isDesabled={false}
+          />
+          <CustomInput
+            name="password"
+            value={data.password}
+            onchangeHandler={handleChange}
+            type="password"
+            label="Password"
+            placeHolder="******"
+            varient="PRIMARY"
+            isDesabled={false}
+          />
           <div className="pt-4">
             <CommonButton
               onSubmitHandler={handleSubmit}
               text="SignIn"
               loading={isLoading}
+              type="button"
+              varient="PRIMARY"
+              isDesabled={false}
             />
+          </div>
+
+          <div className="flex justify-end py-2">
+            <Link href={"/emailVerification"}>
+              <p>Forgot Password</p>
+            </Link>
           </div>
           <div className="pt-7">
             <p className="text-xs">
