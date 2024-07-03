@@ -9,11 +9,12 @@ function ForgotPasswordEmailConfirmPage() {
   const [err, setErr] = useState("");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  
 
   const router = useRouter();
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {};
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
 
   const handleSubmit = () => {
     try {
